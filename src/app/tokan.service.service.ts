@@ -14,20 +14,16 @@ export class TokanServiceService {
   constructor(private http: HttpClient) {}
 
   getData(payload: User): Observable<any[]> {
-    // console.log('Payload received in service:', payload); // Debug payload
-
     const headers = new HttpHeaders().set(
       'Authorization',
       `Bearer ${this.token}`
     );
     return this.http.post<any>(this.apiUrl, payload, { headers }).pipe(
       map((response) => {
-        // console.log('API Response:', response); // Debug API response
-        return response?.data?.data || []; // Safeguard against undefined response
+        return response?.data?.data || [];
       }),
       catchError((error) => {
-        // console.error('Error fetching data from API:', error); // Debug API error
-        return of([]); // Handle error gracefully
+        return of([]);
       })
     );
   }

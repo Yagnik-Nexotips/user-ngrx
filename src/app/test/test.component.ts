@@ -8,12 +8,24 @@ import {
 } from '../core-test/reducer-test/counter.reducer';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { AddUserComponent } from '../add-user/add-user.component';
+import {
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+} from '@angular/router';
 
 @Component({
   selector: 'app-test',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    AddUserComponent,
+    RouterLink,
+    RouterLinkActive,
+    RouterOutlet,
+  ],
   templateUrl: './test.component.html',
   styleUrl: './test.component.scss',
 })
