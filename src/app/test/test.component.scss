@@ -1,0 +1,75 @@
+/* General styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+/* Loading and error messages */
+.loading {
+  font-size: 18px;
+  color: #007bff;
+}
+
+.error {
+  font-size: 18px;
+  color: #d9534f;
+  margin-bottom: 20px;
+}
+
+/* Table container */
+.table-container {
+  margin-top: 20px;
+  overflow-x: auto; /* For responsiveness */
+}
+
+/* Styled table */
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 16px;
+  text-align: left;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Table header */
+.styled-table thead tr {
+  background-color: #007bff;
+  color: #ffffff;
+  text-align: center;
+  font-weight: bold;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Table body */
+.styled-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:hover {
+  background-color: #f1f7ff;
+}
+
+.styled-table td {
+  color: #555;
+}
+
+/* Responsive design */
+@media screen and (max-width: 768px) {
+  .styled-table th,
+  .styled-table td {
+    font-size: 14px;
+    padding: 8px 10px;
+  }
+}
