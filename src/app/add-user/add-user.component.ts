@@ -1,14 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {
-  RouterEvent,
-  RouterLink,
-  RouterLinkActive,
-  RouterOutlet,
-} from '@angular/router';
-import { Router } from 'express';
-import { routes } from '../app.routes';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { User } from '../core-test/reducer-test/counter.reducer';
+import { Store } from '@ngrx/store';
+import { addUser } from '../core-test/action-test/counter-action';
 
 @Component({
   selector: 'app-add-user',
@@ -24,6 +20,9 @@ import { routes } from '../app.routes';
   styleUrl: './add-user.component.scss',
 })
 export class AddUserComponent {
+  name = '';
+  email = '';
+
   newUser = {
     name: '',
     username: '',
@@ -33,9 +32,17 @@ export class AddUserComponent {
     userType: '',
   };
 
+  constructor(private store: Store) {}
+
   onSubmit() {
     console.log('New User:', this.newUser);
-    console.log('New User:', this.newUser.name);
+
+    const newUser: User = {
+      id: Date.now().toString(),
+      name: this.name,
+      email: this.email,
+    };
+    this.store.dispatch(addUser({ user: newUser }));
 
     // Add logic to send the new user to your backend
   }

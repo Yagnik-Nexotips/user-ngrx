@@ -23,19 +23,23 @@
         <td data-label="Address">{{ item.address }}</td>
         <td data-label="User Type">{{ item.userType }}</td>
         <td data-label="Action">
-          <span>Edit</span>
-          <span>Delete</span>
+          <span class="btn btn-primary text-decoration-none text-white"
+            >Edit</span
+          >
+          <span class="btn btn-primary text-decoration-none text-white"
+            >Delete</span
+          >
         </td>
       </tr>
     </tbody>
-    <button
+    <a
       class="btn btn-primary"
       onclick=""
-      [routerLink]="'form'"
+      routerLink="/form"
       routerLinkActive="active"
       ariaCurrentWhenActive="page"
     >
       add
-    </button>
+    </a>
   </table>
 </div>

@@ -14,3 +14,7 @@ export const selectError = createSelector(
   selectDataState,
   (state) => state.error
 );
+export const selectUsers = createSelector(
+  selectDataState,
+  (state) => state.data
+);

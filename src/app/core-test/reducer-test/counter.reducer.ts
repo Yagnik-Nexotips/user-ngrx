@@ -3,7 +3,9 @@ import {
   loadData,
   loadDataSuccess,
   loadDataFailure,
+  addUser,
 } from '../action-test/counter-action';
+import { UserState } from '../state-test/User-state';
 
 export interface User {
   id: number;
@@ -46,6 +48,10 @@ export const dataFeature = createFeature({
       ...state,
       loading: false,
       error,
+    })),
+    on(addUser, (state, { user }) => ({
+      ...state,
+      users: [...state.data, user],
     }))
   ),
 });

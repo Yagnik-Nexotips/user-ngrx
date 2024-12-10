@@ -27,4 +27,18 @@ export class TokanServiceService {
       })
     );
   }
+  addUser(User: User): Observable<any[]> {
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${this.token}`
+    );
+    return this.http.post<any>(this.apiUrl, User, { headers }).pipe(
+      map((response) => {
+        return response?.data?.data || [];
+      }),
+      catchError((error) => {
+        return of([]);
+      })
+    );
+  }
 }

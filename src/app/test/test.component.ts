@@ -9,12 +9,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { AddUserComponent } from '../add-user/add-user.component';
-import {
-  Router,
-  RouterLink,
-  RouterLinkActive,
-  RouterOutlet,
-} from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-test',
