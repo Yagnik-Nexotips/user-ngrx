@@ -33,7 +33,7 @@ export class TestComponent implements OnInit {
       loadData({
         payload: {
           query: { isDeleted: false },
-          options: { select: null, page: 1, paginate: 10 },
+          options: { select: null, page: 1, paginate: 100 },
           isCountOnly: false,
         },
       })

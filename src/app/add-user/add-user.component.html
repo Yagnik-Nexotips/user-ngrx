@@ -1,13 +1,13 @@
 <div class="form-container">
   <h2>Add User</h2>
-  <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+  <form (ngSubmit)="onSubmit()" [formGroup]="userForm">
     <div class="form-group">
       <label for="name">Name:</label>
       <input
         type="text"
         id="name"
         name="name"
-        [(ngModel)]="newUser.name"
+        formControlName="name"
         required
         placeholder="Enter full name"
       />
@@ -19,7 +19,7 @@
         type="text"
         id="username"
         name="username"
-        [(ngModel)]="newUser.username"
+        formControlName="username"
         required
         placeholder="Enter username"
       />
@@ -31,7 +31,7 @@
         type="email"
         id="email"
         name="email"
-        [(ngModel)]="newUser.email"
+        formControlName="email"
         required
         placeholder="Enter email address"
       />
@@ -43,7 +43,7 @@
         type="text"
         id="mobile"
         name="mobile"
-        [(ngModel)]="newUser.mobile"
+        formControlName="mobile"
         required
         placeholder="Enter mobile number"
       />
@@ -54,7 +54,7 @@
       <textarea
         id="address"
         name="address"
-        [(ngModel)]="newUser.address"
+        formControlName="address"
         required
         placeholder="Enter address"
       ></textarea>
@@ -62,12 +62,7 @@
 
     <div class="form-group">
       <label for="userType">User Type:</label>
-      <select
-        id="userType"
-        name="userType"
-        [(ngModel)]="newUser.userType"
-        required
-      >
+      <select id="userType" name="userType" formControlName="userType" required>
         <option value="" disabled selected>Select user type</option>
         <option value="Admin">Admin</option>
         <option value="Customer">Customer</option>
@@ -78,7 +73,7 @@
     <button
       type="submit"
       class="btn-submit"
-      [disabled]="!userForm.form.valid"
+      [disabled]="!userForm.valid"
       (click)="onSubmit()"
     >
       Add User

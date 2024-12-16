@@ -4,8 +4,12 @@ import {
   loadDataSuccess,
   loadDataFailure,
   addUser,
+  addUserSuccess,
+  addUserFailure,
 } from '../action-test/counter-action';
 import { user } from '../user-model/user.model';
+import { stat } from 'fs';
+import { state } from '@angular/animations';
 
 // export interface User {      //form chatgpt
 //   id: number;
@@ -49,9 +53,14 @@ export const dataFeature = createFeature({
       loading: false,
       error,
     })),
-    on(addUser, (state, { user }) => ({
+    on(addUser, (state) => ({ ...state, loading: true, error: null })),
+    on(addUserSuccess, (state, { user }) => ({
       ...state,
       users: [...state.data, user],
+    })),
+    on(addUserFailure, (state, { error }) => ({
+      ...state,
+      error,
     }))
   ),
 });

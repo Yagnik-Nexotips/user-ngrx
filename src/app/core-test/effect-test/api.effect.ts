@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 import {
   loadData,
   loadDataSuccess,
   loadDataFailure,
+  addUser,
+  addUserSuccess,
+  addUserFailure,
 } from '../action-test/counter-action';
 import { TokanServiceService } from '../../tokan.service.service';
 import { of } from 'rxjs';
+import { error } from 'console';
 
 @Injectable()
 export class DataEffects {
@@ -29,6 +33,20 @@ export class DataEffects {
           })
         );
       })
+    )
+  );
+
+  addData$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addUser),
+      mergeMap((actions) =>
+        this.tokanService.addUser(actions.user).pipe(
+          map((user) => addUserSuccess({ user })),
+          catchError((error) => {
+            return of(addUserFailure({ error }));
+          })
+        )
+      )
     )
   );
 }

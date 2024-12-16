@@ -1,55 +1,53 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { RouterLink } from '@angular/router';
 import { Router } from '@angular/router';
 import { addUser } from '../core-test/action-test/counter-action';
+import { userData } from '../core-test/user-model/user.model';
 
 @Component({
   selector: 'app-add-user',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './add-user.component.html',
   styleUrl: './add-user.component.scss',
 })
 export class AddUserComponent {
-  newUser = {
-    name: '',
-    username: '',
-    email: '',
-    mobile: '',
-    address: '',
-    userType: '',
-  };
+  userForm = new FormGroup({
+    name: new FormControl(''),
+    username: new FormControl(''),
+    email: new FormControl(''),
+    mobile: new FormControl(''),
+    address: new FormControl(''),
+    userType: new FormControl(null),
+  });
 
   constructor(private store: Store, private router: Router) {}
 
   onSubmit() {
-    console.log('New User:', this.newUser);
+    const formValues = this.userForm.value;
 
-    this.store.dispatch(
-      addUser({
-        user: {
-          query: { isDeleted: false },
-          options: { select: null, page: 1, paginate: 10 },
-          isCountOnly: false,
-        },
-      })
-    );
+    const newUser: userData = {
+      id: Date.now().toString(),
+      name: formValues.name || '',
+      username: formValues.username || '',
+      email: formValues.email || '',
+      mobile: formValues.mobile || '',
+      address: formValues.address || '',
+      userType: formValues.userType,
+    };
 
-    // const newUser: User = {                     //this is from chatgpt
-    //   id: Date.now().toString(),
-    //   name: this.name,
-    //   email: this.email,
-    // };
-    // this.store.dispatch(addUser({ user: newUser }));
+    this.store.dispatch(addUser({ user: newUser }));
 
-    // Add logic to send the new user to your backend
+    console.log('New User:', this.userForm);
+
     this.router.navigate(['/table']);
   }
-
-  // gotoTable() {
-  //   this.router.navigate(['/table']);
-  // }
 }

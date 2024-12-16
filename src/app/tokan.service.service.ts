@@ -8,9 +8,9 @@ import { user } from './core-test/user-model/user.model';
   providedIn: 'root',
 })
 export class TokanServiceService {
-  private apiUrl = 'http://dailyapi.nexotips.com/admin/user/list';
+  private apiUrl = 'http://dailyapi.nexotips.com/admin/user';
   private token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY3LCJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNzM0MDg3MjAwLCJleHAiOjE3MzQ2ODcyMDB9.r96fBLrZ-AkofpXP6UtatTS-ZUeXWu3QiwVND-6acIA';
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY3LCJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNzM0MzQyNzExLCJleHAiOjE3MzQ5NDI3MTF9.8mMad7ZOFhFMHacI2iO0d69lg8ZS5hFI5RLWbuB5ND4';
 
   constructor(private http: HttpClient) {}
 
@@ -19,21 +19,23 @@ export class TokanServiceService {
       'Authorization',
       `Bearer ${this.token}`
     );
-    return this.http.post<any>(this.apiUrl, payload, { headers }).pipe(
-      map((response) => {
-        return response?.data?.data || [];
-      }),
-      catchError((error) => {
-        return of([]);
-      })
-    );
+    return this.http
+      .post<any>(`${this.apiUrl}/list`, payload, { headers })
+      .pipe(
+        map((response) => {
+          return response?.data?.data || [];
+        }),
+        catchError((error) => {
+          return of([]);
+        })
+      );
   }
-  addUser(User: user): Observable<any[]> {
+  addUser(User: any): Observable<any[]> {
     const headers = new HttpHeaders().set(
       'Authorization',
       `Bearer ${this.token}`
     );
-    return this.http.post<any>(this.apiUrl, User, { headers }).pipe(
+    return this.http.post<any>(`${this.apiUrl}/create`, User, { headers }).pipe(
       map((response) => {
         return response?.data?.data || [];
       }),
