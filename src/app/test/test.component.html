@@ -2,6 +2,15 @@
 <div *ngIf="error$ | async as error" class="error">{{ error }}</div>
 
 <div class="table-container">
+  <a
+    class="btn btn-primary"
+    onclick=""
+    routerLink="/form"
+    routerLinkActive="active"
+    ariaCurrentWhenActive="page"
+  >
+    add
+  </a>
   <table *ngIf="data$ | async as data" class="styled-table">
     <thead>
       <tr>
@@ -32,14 +41,5 @@
         </td>
       </tr>
     </tbody>
-    <a
-      class="btn btn-primary"
-      onclick=""
-      routerLink="/form"
-      routerLinkActive="active"
-      ariaCurrentWhenActive="page"
-    >
-      add
-    </a>
   </table>
 </div>

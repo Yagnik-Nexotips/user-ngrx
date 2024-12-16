@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { User } from '../reducer-test/counter.reducer';
+// import { User } from '../reducer-test/counter.reducer';
+import { user } from '../user-model/user.model';
 
 export const loadData = createAction(
   '[Data] Load Data',
@@ -14,13 +15,13 @@ export const loadDataFailure = createAction(
   props<{ error: string }>()
 );
 
-export const addUser = createAction('[User] Add User', props<{ user: User }>());
+export const addUser = createAction('[user] Add user', props<{ user: any }>());
 
 export const addUserSuccess = createAction(
-  '[User] Add User Success',
+  '[user] Add user Success',
   props<{ data: any[] }>()
 );
 export const addUserFailure = createAction(
-  '[User] Add User Failure',
+  '[user] Add user Failure',
   props<{ error: string }>()
 );

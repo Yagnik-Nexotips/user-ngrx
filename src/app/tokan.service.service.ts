@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, Observable, of, pipe } from 'rxjs';
-import { User } from './core-test/reducer-test/counter.reducer';
+import { user } from './core-test/user-model/user.model';
+// import { User } from './core-test/reducer-test/counter.reducer';
 
 @Injectable({
   providedIn: 'root',
@@ -9,11 +10,11 @@ import { User } from './core-test/reducer-test/counter.reducer';
 export class TokanServiceService {
   private apiUrl = 'http://dailyapi.nexotips.com/admin/user/list';
   private token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY3LCJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNzMzMzkyODk1LCJleHAiOjE3MzM5OTI4OTV9.vm6LVHVgGI950AqiSEqktJ89Ww7w17k160A0TFkAEfE';
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY3LCJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNzM0MDg3MjAwLCJleHAiOjE3MzQ2ODcyMDB9.r96fBLrZ-AkofpXP6UtatTS-ZUeXWu3QiwVND-6acIA';
 
   constructor(private http: HttpClient) {}
 
-  getData(payload: User): Observable<any[]> {
+  getData(payload: user): Observable<any[]> {
     const headers = new HttpHeaders().set(
       'Authorization',
       `Bearer ${this.token}`
@@ -27,7 +28,7 @@ export class TokanServiceService {
       })
     );
   }
-  addUser(User: User): Observable<any[]> {
+  addUser(User: user): Observable<any[]> {
     const headers = new HttpHeaders().set(
       'Authorization',
       `Bearer ${this.token}`

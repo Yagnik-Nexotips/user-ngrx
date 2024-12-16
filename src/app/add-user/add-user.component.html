@@ -75,7 +75,12 @@
       </select>
     </div>
 
-    <button type="submit" class="btn-submit" [disabled]="!userForm.form.valid">
+    <button
+      type="submit"
+      class="btn-submit"
+      [disabled]="!userForm.form.valid"
+      (click)="onSubmit()"
+    >
       Add User
     </button>
   </form>
