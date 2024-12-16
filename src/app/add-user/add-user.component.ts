@@ -41,7 +41,7 @@ export class AddUserComponent {
       email: formValues.email || '',
       mobile: formValues.mobile || '',
       address: formValues.address || '',
-      userType: formValues.userType,
+      userType: formValues.userType || null,
     };
 
     this.store.dispatch(addUser({ user: newUser }));

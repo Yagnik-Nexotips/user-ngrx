@@ -28,3 +28,12 @@ export interface userData {
   address: string;
   userType: any;
 }
+
+export enum Roles {
+  superUser = 1,
+  user = 2,
+  organization = 3,
+  team = 4,
+  sponsor = 5,
+  player = 6,
+}
