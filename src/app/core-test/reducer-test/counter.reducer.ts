@@ -7,9 +7,10 @@ import {
   addUserSuccess,
   addUserFailure,
 } from '../action-test/counter-action';
-import { user } from '../user-model/user.model';
+// import { user } from '../user-model/user.model';
 import { stat } from 'fs';
 import { state } from '@angular/animations';
+import { userData } from '../user-model/user.model';
 
 // export interface User {      //form chatgpt
 //   id: number;
@@ -27,7 +28,7 @@ import { state } from '@angular/animations';
 // }
 
 export interface DataState {
-  data: user[];
+  data: userData[];
   loading: boolean;
   error: string | null;
 }
@@ -46,7 +47,7 @@ export const dataFeature = createFeature({
     on(loadDataSuccess, (state, { data }) => ({
       ...state,
       loading: false,
-      data: data as user[],
+      data: data as userData[],
     })),
     on(loadDataFailure, (state, { error }) => ({
       ...state,
@@ -54,9 +55,9 @@ export const dataFeature = createFeature({
       error,
     })),
     on(addUser, (state) => ({ ...state, loading: true, error: null })),
-    on(addUserSuccess, (state, { user }) => ({
+    on(addUserSuccess, (state, { userData }) => ({
       ...state,
-      users: [...state.data, user],
+      users: [...state.data, addUser],
     })),
     on(addUserFailure, (state, { error }) => ({
       ...state,

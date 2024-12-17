@@ -1,8 +1,7 @@
-// import { User } from '../reducer-test/counter.reducer';
-import { user } from '../user-model/user.model';
+import { userData } from '../user-model/user.model';
 
 export interface UserState {
-  users: user[];
+  users: userData[];
 }
 
 export const initialState: UserState = {

@@ -7,10 +7,12 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { RouterLink } from '@angular/router';
 import { Router } from '@angular/router';
-import { addUser } from '../core-test/action-test/counter-action';
-import { userData } from '../core-test/user-model/user.model';
+import {
+  addUser,
+  addUserSuccess,
+} from '../core-test/action-test/counter-action';
+import { Type, userData } from '../core-test/user-model/user.model';
 
 @Component({
   selector: 'app-add-user',
@@ -20,13 +22,15 @@ import { userData } from '../core-test/user-model/user.model';
   styleUrl: './add-user.component.scss',
 })
 export class AddUserComponent {
+  Type = Type;
+
   userForm = new FormGroup({
     name: new FormControl(''),
     username: new FormControl(''),
     email: new FormControl(''),
     mobile: new FormControl(''),
     address: new FormControl(''),
-    userType: new FormControl(null),
+    role: new FormControl(''),
   });
 
   constructor(private store: Store, private router: Router) {}
@@ -35,18 +39,19 @@ export class AddUserComponent {
     const formValues = this.userForm.value;
 
     const newUser: userData = {
-      id: Date.now().toString(),
       name: formValues.name || '',
       username: formValues.username || '',
       email: formValues.email || '',
       mobile: formValues.mobile || '',
       address: formValues.address || '',
-      userType: formValues.userType || null,
+      confirmPassword: '123123',
+      password: '123123',
+      role: formValues.role || '',
     };
 
-    this.store.dispatch(addUser({ user: newUser }));
+    console.log('Payload being sent:', newUser);
 
-    console.log('New User:', this.userForm);
+    this.store.dispatch(addUser({ user: newUser }));
 
     this.router.navigate(['/table']);
   }

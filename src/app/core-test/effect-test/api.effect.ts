@@ -8,10 +8,12 @@ import {
   addUser,
   addUserSuccess,
   addUserFailure,
+  updateUser,
 } from '../action-test/counter-action';
 import { TokanServiceService } from '../../tokan.service.service';
 import { of } from 'rxjs';
 import { error } from 'console';
+import { userData } from '../user-model/user.model';
 
 @Injectable()
 export class DataEffects {
@@ -41,7 +43,7 @@ export class DataEffects {
       ofType(addUser),
       mergeMap((actions) =>
         this.tokanService.addUser(actions.user).pipe(
-          map((user) => addUserSuccess({ user })),
+          map((userData) => addUserSuccess({ userData })),
           catchError((error) => {
             return of(addUserFailure({ error }));
           })
@@ -49,4 +51,12 @@ export class DataEffects {
       )
     )
   );
+
+  update$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(updateUser),
+    switchMap((actions) =>
+    this.tokanService.
+    )
+  ))
 }
