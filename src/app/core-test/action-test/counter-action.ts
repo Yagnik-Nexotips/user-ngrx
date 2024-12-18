@@ -28,7 +28,16 @@ export const addUserFailure = createAction(
   props<{ error: string }>()
 );
 
+// Action to trigger updating a user
 export const updateUser = createAction(
-  '[update] user update',
-  props<{ upDate: userData }>()
+  '[User] Update User',
+  props<{ user: userData }>()
+);
+export const updateUserSuccess = createAction(
+  '[User] Update User Success',
+  props<{ updatedUser: userData }>()
+);
+export const updateUserFailure = createAction(
+  '[User] Update User Failure',
+  props<{ error: string }>()
 );
