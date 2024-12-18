@@ -52,11 +52,11 @@ export class DataEffects {
     )
   );
 
-  update$ = createEffect(() =>
-  this.actions$.pipe(
-    ofType(updateUser),
-    switchMap((actions) =>
-    this.tokanService.
-    )
-  ))
+  // update$ = createEffect(() =>
+  // this.actions$.pipe(
+  //   ofType(updateUser),
+  //   switchMap((actions) =>
+  //   this.tokanService.
+  //   )
+  // ))
 }

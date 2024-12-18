@@ -6,26 +6,13 @@ import {
   addUser,
   addUserSuccess,
   addUserFailure,
+  updateUser,
+  updateUserSuccess,
+  updateUserFailure,
 } from '../action-test/counter-action';
-// import { user } from '../user-model/user.model';
 import { stat } from 'fs';
 import { state } from '@angular/animations';
 import { userData } from '../user-model/user.model';
-
-// export interface User {      //form chatgpt
-//   id: number;
-//   name: string;
-//   username: string;
-//   email: string;
-//   mobile: number;
-//   image: string | null;
-//   address: string;
-//   userType: number;
-//   isActive: boolean;
-//   isDeleted: boolean;
-//   createdAt: string;
-//   updatedAt: string;
-// }
 
 export interface DataState {
   data: userData[];
@@ -61,6 +48,19 @@ export const dataFeature = createFeature({
     })),
     on(addUserFailure, (state, { error }) => ({
       ...state,
+      error,
+    })),
+    on(updateUser, (state) => ({ ...state, loading: true, error: null })),
+    on(updateUserSuccess, (state, { updatedUser }) => ({
+      ...state,
+      loading: false,
+      data: state.data.map((user) =>
+        user.id === updatedUser.id ? updatedUser : user
+      ),
+    })),
+    on(updateUserFailure, (state, { error }) => ({
+      ...state,
+      loading: false,
       error,
     }))
   ),
