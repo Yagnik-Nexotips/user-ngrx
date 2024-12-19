@@ -9,6 +9,9 @@ import {
   updateUser,
   updateUserSuccess,
   updateUserFailure,
+  loadUserDetails,
+  loadUserDetailsSuccess,
+  loadUserDetailsFailure,
 } from '../action-test/counter-action';
 import { stat } from 'fs';
 import { state } from '@angular/animations';
@@ -18,12 +21,14 @@ export interface DataState {
   data: userData[];
   loading: boolean;
   error: string | null;
+  selectedUser: userData | null; // Single user data (for edit mode)
 }
 
 const initialState: DataState = {
   data: [],
   loading: false,
   error: null,
+  selectedUser: null, // Initialize selectedUser to null
 };
 
 export const dataFeature = createFeature({
@@ -59,6 +64,22 @@ export const dataFeature = createFeature({
       ),
     })),
     on(updateUserFailure, (state, { error }) => ({
+      ...state,
+      loading: false,
+      error,
+    })),
+    // Handle loading of a single user (for edit mode)
+    on(loadUserDetails, (state) => ({
+      ...state,
+      loading: true,
+      error: null,
+    })),
+    on(loadUserDetailsSuccess, (state, { user }) => ({
+      ...state,
+      loading: false,
+      selectedUser: user,
+    })),
+    on(loadUserDetailsFailure, (state, { error }) => ({
       ...state,
       loading: false,
       error,

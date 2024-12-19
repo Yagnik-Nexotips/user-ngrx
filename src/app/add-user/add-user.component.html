@@ -75,7 +75,7 @@
       [disabled]="!userForm.valid"
       (click)="onSubmit()"
     >
-      Add User
+      {{ isEditMode ? "Update User" : "Add User" }}
     </button>
   </form>
 </div>

@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { userData } from '../user-model/user.model';
 
+// Action to trigger loading a user
 export const loadData = createAction(
   '[Data] Load Data',
   props<{ payload: any }>()
@@ -14,6 +15,7 @@ export const loadDataFailure = createAction(
   props<{ error: string }>()
 );
 
+// Action to trigger adding a user
 export const addUser = createAction(
   '[user] Add user',
   props<{ user: userData }>()
@@ -39,5 +41,21 @@ export const updateUserSuccess = createAction(
 );
 export const updateUserFailure = createAction(
   '[User] Update User Failure',
+  props<{ error: string }>()
+);
+
+// Action to load user details by user ID
+export const loadUserDetails = createAction(
+  '[User] Load User Details',
+  props<{ userId: string }>()
+);
+
+export const loadUserDetailsSuccess = createAction(
+  '[User] Load User Details Success',
+  props<{ user: userData }>()
+);
+
+export const loadUserDetailsFailure = createAction(
+  '[User] Load User Details Failure',
   props<{ error: string }>()
 );

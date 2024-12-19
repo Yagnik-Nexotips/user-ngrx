@@ -1,20 +1,28 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { DataState } from '../reducer-test/counter.reducer';
+import { UserState } from '../state-test/User-state';
 
-export const selectDataState = createFeatureSelector<DataState>('data');
-export const selectData = createSelector(
+export const selectDataState = createFeatureSelector<UserState>('user');
+// Select All Users
+export const selectAllUsers = createSelector(
   selectDataState,
-  (state) => state.data
+  (state: UserState) => state.users
 );
-export const selectLoading = createSelector(
+
+// Select Loading State
+export const selectUserLoading = createSelector(
   selectDataState,
-  (state) => state.loading
+  (state: UserState) => state.loading
 );
-export const selectError = createSelector(
+
+// Select Error State
+export const selectUserError = createSelector(
   selectDataState,
-  (state) => state.error
+  (state: UserState) => state.error
 );
-export const selectUsers = createSelector(
-  selectDataState,
-  (state) => state.data
-);
+
+// Select User by ID
+export const selectUserById = (userId: string) =>
+  createSelector(selectAllUsers, (users) =>
+    users.find((user) => user.id === userId)
+  );

@@ -47,16 +47,20 @@ export class TokanServiceService {
     );
   }
 
-  upDateUser(userId: string, userData: any): Observable<any[]> {
+  updateUser(User: any): Observable<any[]> {
     const headers = new HttpHeaders().set(
       'Authorization',
       `Bearer ${this.token}`
     );
+
     return this.http
-      .put(`${this.apiUrl}/update/${userId}`, userData, { headers })
+      .put<any>(`${this.apiUrl}/update/${User.id}`, User, { headers })
       .pipe(
         map((response) => {
-          return;
+          return response?.data?.data;
+        }),
+        catchError((error) => {
+          return of([]);
         })
       );
   }

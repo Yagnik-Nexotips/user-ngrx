@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
+import {
+  catchError,
+  exhaustMap,
+  map,
+  mergeMap,
+  switchMap,
+} from 'rxjs/operators';
 import {
   loadData,
   loadDataSuccess,
@@ -9,6 +15,8 @@ import {
   addUserSuccess,
   addUserFailure,
   updateUser,
+  updateUserSuccess,
+  updateUserFailure,
 } from '../action-test/counter-action';
 import { TokanServiceService } from '../../tokan.service.service';
 import { of } from 'rxjs';
@@ -52,11 +60,29 @@ export class DataEffects {
     )
   );
 
-  // update$ = createEffect(() =>
-  // this.actions$.pipe(
-  //   ofType(updateUser),
-  //   switchMap((actions) =>
-  //   this.tokanService.
+  updateData$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType('[User] Update User'),
+      exhaustMap(() =>
+        this.tokanService.updateUser(updateUser).pipe(
+          map((data) => ({
+            type: '[User] Update User Success',
+            payload: data,
+          })),
+          catchError(() => of({ type: '[User] Update User Failure' }))
+        )
+      )
+    )
+  );
+  // updateData$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(updateUser),
+  //     mergeMap((actions) =>
+  //       this.tokanService.updateUser(actions.user).pipe(
+  //         map((updatedUser) => updateUserSuccess({ updatedUser })),
+  //         catchError((error) => of(updateUserFailure({ error })))
+  //       )
+  //     )
   //   )
-  // ))
+  // );
 }

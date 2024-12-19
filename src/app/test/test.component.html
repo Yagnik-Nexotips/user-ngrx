@@ -4,7 +4,6 @@
 <div class="table-container">
   <a
     class="btn btn-primary"
-    onclick=""
     routerLink="/form"
     routerLinkActive="active"
     ariaCurrentWhenActive="page"
@@ -32,12 +31,15 @@
         <td data-label="Address">{{ item.address }}</td>
         <td data-label="User Type">{{ item.role }}</td>
         <td data-label="Action">
-          <span class="btn btn-primary text-decoration-none text-white"
-            >Edit</span
+          <span
+            class="btn btn-primary text-decoration-none text-white"
+            [routerLink]="['/form', item.id]"
           >
-          <span class="btn btn-primary text-decoration-none text-white"
-            >Delete</span
-          >
+            Edit
+          </span>
+          <span class="btn btn-primary text-decoration-none text-white">
+            Delete
+          </span>
         </td>
       </tr>
     </tbody>
