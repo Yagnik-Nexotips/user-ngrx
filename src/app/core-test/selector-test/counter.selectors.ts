@@ -2,7 +2,7 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { DataState } from '../reducer-test/counter.reducer';
 import { UserState } from '../state-test/User-state';
 
-export const selectDataState = createFeatureSelector<UserState>('user');
+export const selectDataState = createFeatureSelector<UserState>('data');
 // Select All Users
 export const selectAllUsers = createSelector(
   selectDataState,
@@ -21,8 +21,11 @@ export const selectUserError = createSelector(
   (state: UserState) => state.error
 );
 
-// Select User by ID
+// Create the feature selector for the 'user' state
+export const selectUserState = createFeatureSelector<UserState>('data');
+
 export const selectUserById = (userId: string) =>
-  createSelector(selectAllUsers, (users) =>
-    users.find((user) => user.id === userId)
+  createSelector(
+    selectUserState,
+    (state: UserState) => state.users.find((user) => user.id === userId) || null
   );

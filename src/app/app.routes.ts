@@ -6,4 +6,5 @@ export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/table' },
   { path: 'table', component: TestComponent },
   { path: 'form', component: AddUserComponent },
+  { path: 'form/:id', component: AddUserComponent },
 ];

@@ -13,8 +13,6 @@ import {
   loadUserDetailsSuccess,
   loadUserDetailsFailure,
 } from '../action-test/counter-action';
-import { stat } from 'fs';
-import { state } from '@angular/animations';
 import { userData } from '../user-model/user.model';
 
 export interface DataState {
@@ -35,6 +33,7 @@ export const dataFeature = createFeature({
   name: 'data',
   reducer: createReducer(
     initialState,
+    // Load all users
     on(loadData, (state) => ({ ...state, loading: true, error: null })),
     on(loadDataSuccess, (state, { data }) => ({
       ...state,
@@ -46,15 +45,19 @@ export const dataFeature = createFeature({
       loading: false,
       error,
     })),
+    // Add a new user
     on(addUser, (state) => ({ ...state, loading: true, error: null })),
     on(addUserSuccess, (state, { userData }) => ({
       ...state,
-      users: [...state.data, addUser],
+      loading: false,
+      data: [...state.data, userData], // Add new user to the array
     })),
     on(addUserFailure, (state, { error }) => ({
       ...state,
+      loading: false,
       error,
     })),
+    // Update an existing user
     on(updateUser, (state) => ({ ...state, loading: true, error: null })),
     on(updateUserSuccess, (state, { updatedUser }) => ({
       ...state,
@@ -62,13 +65,14 @@ export const dataFeature = createFeature({
       data: state.data.map((user) =>
         user.id === updatedUser.id ? updatedUser : user
       ),
+      selectedUser: null, // Reset selectedUser after successful update
     })),
     on(updateUserFailure, (state, { error }) => ({
       ...state,
       loading: false,
       error,
     })),
-    // Handle loading of a single user (for edit mode)
+    // Load a single user for edit mode
     on(loadUserDetails, (state) => ({
       ...state,
       loading: true,
@@ -77,7 +81,7 @@ export const dataFeature = createFeature({
     on(loadUserDetailsSuccess, (state, { user }) => ({
       ...state,
       loading: false,
-      selectedUser: user,
+      selectedUser: user, // Set selectedUser for edit mode
     })),
     on(loadUserDetailsFailure, (state, { error }) => ({
       ...state,

@@ -59,3 +59,8 @@ export const loadUserDetailsFailure = createAction(
   '[User] Load User Details Failure',
   props<{ error: string }>()
 );
+
+export const setSelectedUser = createAction(
+  '[User] Set Selected User',
+  props<{ user: userData }>() // This will pass the userData as the payload
+);

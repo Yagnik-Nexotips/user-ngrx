@@ -32,6 +32,23 @@ export class TokanServiceService {
         })
       );
   }
+
+  // Add method to get user details
+  getUserDetails(userId: string): Observable<userData> {
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${this.token}`
+    );
+    return this.http.get<any>(`${this.apiUrl}/get/${userId}`, { headers }).pipe(
+      map((response) => {
+        return response?.data || {}; // Return the user data or empty object if not found
+      }),
+      catchError((error) => {
+        return of({} as userData); // Return an empty object in case of error
+      })
+    );
+  }
+
   addUser(User: any): Observable<any[]> {
     const headers = new HttpHeaders().set(
       'Authorization',

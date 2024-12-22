@@ -21,6 +21,7 @@ export class TestComponent implements OnInit {
   data$!: Observable<any[]>;
   loading$!: Observable<boolean>;
   error$!: Observable<string | null>;
+  console = console;
 
   constructor(private store: Store) {}
 
@@ -38,5 +39,6 @@ export class TestComponent implements OnInit {
         },
       })
     );
+    this.data$.subscribe((data) => console.log('Data:', data));
   }
 }

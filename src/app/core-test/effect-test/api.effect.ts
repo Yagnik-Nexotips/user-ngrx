@@ -15,13 +15,13 @@ import {
   addUserSuccess,
   addUserFailure,
   updateUser,
-  updateUserSuccess,
-  updateUserFailure,
+  loadUserDetails,
+  loadUserDetailsSuccess,
+  loadUserDetailsFailure,
+  setSelectedUser,
 } from '../action-test/counter-action';
 import { TokanServiceService } from '../../tokan.service.service';
 import { of } from 'rxjs';
-import { error } from 'console';
-import { userData } from '../user-model/user.model';
 
 @Injectable()
 export class DataEffects {
@@ -30,17 +30,14 @@ export class DataEffects {
     private tokanService: TokanServiceService
   ) {}
 
-  loadData$ = createEffect(() =>
+  loadUser$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loadData),
+      ofType('[User] Load User'), // Triggered by this action
       switchMap((action) => {
-        return this.tokanService.getData(action.payload).pipe(
-          map((data) => {
-            return loadDataSuccess({ data });
-          }),
-          catchError((error) => {
-            return of(loadDataFailure({ error }));
-          })
+        const userId = action['userId']; // Get userId from the action
+        return this.tokanService.getUserDetails(userId).pipe( // Fetch user details using service
+          map((user) => setSelectedUser({ user })), // Dispatch action to set selected user
+          catchError((error) => of({ type: '[User] Load User Failure', error }))
         );
       })
     )
@@ -74,15 +71,17 @@ export class DataEffects {
       )
     )
   );
-  // updateData$ = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(updateUser),
-  //     mergeMap((actions) =>
-  //       this.tokanService.updateUser(actions.user).pipe(
-  //         map((updatedUser) => updateUserSuccess({ updatedUser })),
-  //         catchError((error) => of(updateUserFailure({ error })))
-  //       )
-  //     )
-  //   )
-  // );
+
+  loadUserDetails$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadUserDetails),
+      switchMap((action) =>
+        this.tokanService.getUserDetails(action.userId).pipe(
+          map((user) => loadUserDetailsSuccess({ user })),
+          catchError((error) => of(loadUserDetailsFailure({ error })))
+        )
+      )
+    )
+  );
+  
 }
