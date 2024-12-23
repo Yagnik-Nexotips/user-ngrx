@@ -39,7 +39,7 @@ export class TokanServiceService {
       'Authorization',
       `Bearer ${this.token}`
     );
-    return this.http.get<any>(`${this.apiUrl}/get/${userId}`, { headers }).pipe(
+    return this.http.get<any>(`${this.apiUrl}/${userId}`, { headers }).pipe(
       map((response) => {
         return response?.data || {}; // Return the user data or empty object if not found
       }),
