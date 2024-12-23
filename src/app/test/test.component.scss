@@ -1,49 +1,51 @@
-/* General styles */
+/* General Styles */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  padding: 20px;
-  background-color: #f9f9f9;
+  padding: 0;
+  background-color: #f8f9fa;
   color: #333;
 }
 
-/* Loading and error messages */
+/* Loading and Error Messages */
 .loading {
-  font-size: 18px;
+  text-align: center;
+  font-size: 1.5rem;
   color: #007bff;
+  margin: 20px 0;
 }
 
 .error {
-  font-size: 18px;
-  color: #d9534f;
-  margin-bottom: 20px;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #dc3545;
+  margin: 20px 0;
 }
 
-/* Table container */
+/* Table Container */
 .table-container {
-  margin-top: 20px;
-  overflow-x: auto; /* For responsiveness */
+  padding: 10px;
+  margin: 0 auto;
+  // max-width: 1200px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Styled table */
+/* Styled Table */
 .styled-table {
   width: 100%;
   border-collapse: collapse;
-  margin: 25px 0;
-  font-size: 16px;
+  margin: 20px 0;
+  font-size: 0.9rem;
+  background-color: #f8f9fa;
   text-align: left;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-  border-radius: 8px;
-  overflow: hidden;
 }
 
-/* Table header */
 .styled-table thead tr {
   background-color: #007bff;
   color: #ffffff;
-  text-align: center;
-  font-weight: bold;
+  text-align: left;
 }
 
 .styled-table th,
@@ -52,24 +54,55 @@ body {
   border-bottom: 1px solid #ddd;
 }
 
-/* Table body */
 .styled-table tbody tr:nth-of-type(even) {
   background-color: #f3f3f3;
 }
 
 .styled-table tbody tr:hover {
-  background-color: #f1f7ff;
+  background-color: #f1f1f1;
 }
 
-.styled-table td {
-  color: #555;
+.styled-table tbody tr td {
+  vertical-align: middle;
 }
 
-/* Responsive design */
+/* Action Buttons */
+.styled-table tbody tr td span {
+  margin-right: 10px;
+  cursor: pointer;
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.styled-table tbody tr td span:hover {
+  color: #0056b3;
+}
+
+/* Responsive Design */
 @media screen and (max-width: 768px) {
-  .styled-table th,
+  .styled-table thead {
+    display: none;
+  }
+
+  .styled-table tr {
+    display: block;
+    margin-bottom: 15px;
+  }
+
   .styled-table td {
-    font-size: 14px;
-    padding: 8px 10px;
+    display: block;
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  .styled-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 50%;
+    padding-left: 15px;
+    font-weight: bold;
+    text-align: left;
   }
 }

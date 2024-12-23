@@ -8,12 +8,12 @@ import {
 } from '../core-test/reducer-test/counter.reducer';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-test',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './test.component.html',
   styleUrl: './test.component.scss',
 })
@@ -21,6 +21,7 @@ export class TestComponent implements OnInit {
   data$!: Observable<any[]>;
   loading$!: Observable<boolean>;
   error$!: Observable<string | null>;
+  console = console;
 
   constructor(private store: Store) {}
 
@@ -33,10 +34,11 @@ export class TestComponent implements OnInit {
       loadData({
         payload: {
           query: { isDeleted: false },
-          options: { select: null, page: 1, paginate: 10 },
+          options: { select: null, page: 1, paginate: 100 },
           isCountOnly: false,
         },
       })
     );
+    this.data$.subscribe((data) => console.log('Data:', data));
   }
 }
