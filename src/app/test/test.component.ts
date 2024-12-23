@@ -39,6 +39,5 @@ export class TestComponent implements OnInit {
         },
       })
     );
-    this.data$.subscribe((data) => console.log('Data:', data));
   }
 }

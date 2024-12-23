@@ -38,12 +38,12 @@ export class AddUserComponent implements OnInit {
     mobile: new FormControl('', Validators.required),
     address: new FormControl('', Validators.required),
     role: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
-    confirmPassword: new FormControl('', Validators.required),
+    password: new FormControl('123123', Validators.required),
+    confirmPassword: new FormControl('123123', Validators.required),
   });
 
   constructor(
-    private store: Store<UserState>,
+    private store: Store<{ user: UserState }>,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -61,15 +61,27 @@ export class AddUserComponent implements OnInit {
   }
 
   loadUserDetails(userId: string): void {
-    // Logic to fetch user details using userId
-    // Example: Dispatch an NgRx action to load the user details
-    console.log(`Loading details for user with ID: ${userId}`);
-    this.store.dispatch(loadUserDetails({ userId }));
-    // Populate the form with fetched user details
+    // this.store.dispatch(loadUserDetails({ userId }));
+    this.store.select(selectUserById(userId)).subscribe((user: any) => {
+      if (user.status === 'SUCCESS') {
+        this.userForm.patchValue({
+          name: user.name,
+          username: user.username,
+          email: user.email,
+          mobile: user.mobile,
+          address: user.address,
+          role: user.role,
+          password: user.password,
+          confirmPassword: user.confirmPassword,
+        });
+      }
+    });
   }
 
   onSubmit() {
-    if (this.userForm.invalid) return;
+    if (this.userForm.invalid) {
+      return;
+    }
 
     const formValues = this.userForm.value;
     const user: userData = {
