@@ -38,7 +38,7 @@ export const dataFeature = createFeature({
     on(loadDataSuccess, (state, { data }) => ({
       ...state,
       loading: false,
-      data: data as userData[],
+      data: [...state.data, ...data], // Assuming loadDataSuccess sends an array of users
     })),
     on(loadDataFailure, (state, { error }) => ({
       ...state,
@@ -77,18 +77,22 @@ export const dataFeature = createFeature({
       ...state,
       loading: true,
       error: null,
+      selectedUser: null, // Reset selectedUser while loading
     })),
     on(loadUserDetailsSuccess, (state, { user }) => ({
       ...state,
       loading: false,
-      selectedUser: user, // Set selectedUser for edit mode
+      data: state.data.map((u) => (u.id === user.id ? user : u)), // Update user in the data array
+      selectedUser: user, // Set the selectedUser for edit mode
     })),
     on(loadUserDetailsFailure, (state, { error }) => ({
       ...state,
       loading: false,
       error,
+      selectedUser: null, // In case of failure, reset selectedUser
     }))
   ),
 });
 
-export const { selectData, selectLoading, selectError } = dataFeature;
+export const { selectData, selectLoading, selectError, selectSelectedUser } =
+  dataFeature;

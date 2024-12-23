@@ -57,7 +57,7 @@ export const loadUserDetailsSuccess = createAction(
 
 export const loadUserDetailsFailure = createAction(
   '[User] Load User Details Failure',
-  props<{ error: string }>()
+  props<{ error: any }>()
 );
 
 export const setSelectedUser = createAction(

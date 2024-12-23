@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
-  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -16,12 +15,12 @@ import {
 import { Type, userData } from '../core-test/user-model/user.model';
 import { selectUserById } from '../core-test/selector-test/counter.selectors';
 import { CommonModule } from '@angular/common';
-import { UserState } from '../core-test/state-test/User-state';
+import { DataState } from '../core-test/reducer-test/counter.reducer';
 
 @Component({
   selector: 'app-add-user',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './add-user.component.html',
   styleUrl: './add-user.component.scss',
 })
@@ -29,7 +28,6 @@ export class AddUserComponent implements OnInit {
   Type = Type;
   isEditMode: boolean = false;
   userId: string | null = null;
-  selectedUser: userData | null = null;
 
   userForm = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -43,7 +41,7 @@ export class AddUserComponent implements OnInit {
   });
 
   constructor(
-    private store: Store<{ user: UserState }>,
+    private store: Store<{ user: DataState }>,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -61,9 +59,13 @@ export class AddUserComponent implements OnInit {
   }
 
   loadUserDetails(userId: string): void {
-    // this.store.dispatch(loadUserDetails({ userId }));
-    this.store.select(selectUserById(userId)).subscribe((user: any) => {
-      if (user.status === 'SUCCESS') {
+    this.store.dispatch(loadUserDetails({ userId }));
+
+    // Now listen for the user data in the store
+    this.store.select(selectUserById(userId)).subscribe((user) => {
+      console.log('Loaded User:', user);
+      if (user) {
+        // Patch form only after user data is available
         this.userForm.patchValue({
           name: user.name,
           username: user.username,
@@ -71,9 +73,13 @@ export class AddUserComponent implements OnInit {
           mobile: user.mobile,
           address: user.address,
           role: user.role,
-          password: user.password,
-          confirmPassword: user.confirmPassword,
+          password: '123123',
+          confirmPassword: '123123',
         });
+      } else {
+        console.error(
+          `User with ID ${userId} not found or state is not initialized.`
+        );
       }
     });
   }
