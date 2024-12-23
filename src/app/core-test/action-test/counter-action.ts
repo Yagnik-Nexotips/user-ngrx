@@ -8,7 +8,7 @@ export const loadData = createAction(
 );
 export const loadDataSuccess = createAction(
   '[Data] Load Data Success',
-  props<{ data: any[] }>()
+  props<{ data: any }>()
 );
 export const loadDataFailure = createAction(
   '[Data] Load Data Failure',

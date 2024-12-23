@@ -32,10 +32,11 @@ export class DataEffects {
 
   loadUser$ = createEffect(() =>
     this.actions$.pipe(
-      ofType('[User] Load User'), // Triggered by this action
+      ofType('[User] Load User Details'), // Triggered by this action
       switchMap((action) => {
         const userId = action['userId']; // Get userId from the action
-        return this.tokanService.getUserDetails(userId).pipe( // Fetch user details using service
+        return this.tokanService.getUserDetails(userId).pipe(
+          // Fetch user details using service
           map((user) => setSelectedUser({ user })), // Dispatch action to set selected user
           catchError((error) => of({ type: '[User] Load User Failure', error }))
         );
@@ -83,5 +84,4 @@ export class DataEffects {
       )
     )
   );
-  
 }

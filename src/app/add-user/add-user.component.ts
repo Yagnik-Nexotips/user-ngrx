@@ -49,21 +49,23 @@ export class AddUserComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const userId = '';
-    // Fetch the userId from the route parameters (for editing)
-    this.store.select(selectUserById).subscribe(user) => {
-      this.selectedUser = userId;
-      if (this.userId) {
-        this.isEditMode = true; // Set Edit Mode
-        this.userId = this.userId; // Save the userId
-        this.store.dispatch(loadUserDetails({ userId }));
-        this.store.select(selectUserById(this.userId)).subscribe((user) => {
-          if (user) {
-            this.userForm.patchValue(user); // Populate the form with user data
-          }
-        });
+    this.route.params.subscribe((params) => {
+      const userId = params['id']; // Assumes your route is like /form/:id
+      if (userId) {
+        this.isEditMode = true; // Editing mode
+        this.loadUserDetails(userId); // Load user details for editing
+      } else {
+        this.isEditMode = false; // Adding mode
       }
-    }
+    });
+  }
+
+  loadUserDetails(userId: string): void {
+    // Logic to fetch user details using userId
+    // Example: Dispatch an NgRx action to load the user details
+    console.log(`Loading details for user with ID: ${userId}`);
+    this.store.dispatch(loadUserDetails({ userId }));
+    // Populate the form with fetched user details
   }
 
   onSubmit() {

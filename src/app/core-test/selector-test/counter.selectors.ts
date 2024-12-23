@@ -22,7 +22,7 @@ export const selectUserError = createSelector(
 );
 
 // Create the feature selector for the 'user' state
-export const selectUserState = createFeatureSelector<UserState>('data');
+export const selectUserState = (state: { user: UserState }) => state.user;
 
 export const selectUserById = (userId: string) =>
   createSelector(

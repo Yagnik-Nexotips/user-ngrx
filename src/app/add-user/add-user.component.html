@@ -1,5 +1,5 @@
 <div class="form-container">
-  <h2>Add User</h2>
+  <h2>{{ isEditMode ? "Edit User" : "Add User" }}</h2>
   <form (ngSubmit)="onSubmit()" [formGroup]="userForm">
     <div class="form-group">
       <label for="name">Name:</label>
