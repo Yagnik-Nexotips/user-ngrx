@@ -77,9 +77,10 @@ export class AddUserComponent implements OnInit {
           confirmPassword: '123123',
         });
       } else {
-        console.error(
-          `User with ID ${userId} not found or state is not initialized.`
-        );
+        console
+          .error
+          // `User with ID ${userId} not found or state is not initialized.`
+          ();
       }
     });
   }

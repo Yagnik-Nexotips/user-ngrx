@@ -21,7 +21,6 @@ export class TestComponent implements OnInit {
   data$!: Observable<any[]>;
   loading$!: Observable<boolean>;
   error$!: Observable<string | null>;
-  console = console;
 
   constructor(private store: Store) {}
 

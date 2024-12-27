@@ -74,12 +74,19 @@ export class DataEffects {
   loadUserDetails$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadUserDetails),
-      switchMap((action) =>
-        this.tokanService.getUserDetails(action.userId).pipe(
-          map((user) => loadUserDetailsSuccess({ user })),
-          catchError((error) => of(loadUserDetailsFailure({ error })))
-        )
-      )
+      switchMap((action) => {
+        console.log('Effect triggered with userId:', action.userId);
+        return this.tokanService.getUserDetails(action.userId).pipe(
+          map((user) => {
+            console.log('API returned user:', user);
+            return loadUserDetailsSuccess({ user });
+          }),
+          catchError((error) => {
+            console.error('Error in effect:', error);
+            return of(loadUserDetailsFailure({ error }));
+          })
+        );
+      })
     )
   );
 }
