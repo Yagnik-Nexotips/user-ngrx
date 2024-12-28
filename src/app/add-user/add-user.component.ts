@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {
   addUser,
   loadUserDetails,
+  loadUserDetailsSuccess,
   updateUser,
 } from '../core-test/action-test/counter-action';
 import { Type, userData } from '../core-test/user-model/user.model';
@@ -58,36 +59,35 @@ export class AddUserComponent implements OnInit {
     });
   }
 
+  loadData(user: userData): void {
+    this.store.dispatch(loadUserDetailsSuccess({ user: user }));
+  }
+
   loadUserDetails(userId: string): void {
     this.store.dispatch(loadUserDetails({ userId }));
 
     // Now listen for the user data in the store
-    this.store.select(selectUserById(userId)).subscribe((user) => {
-      console.log('Loaded User:', user);
-      if (user) {
+    this.store.select(selectUserById(userId)).subscribe((response: any) => {
+      console.log('Loaded User:', response);
+      if (response.status === 'SUCCESS') {
         // Patch form only after user data is available
         this.userForm.patchValue({
-          name: user.name,
-          username: user.username,
-          email: user.email,
-          mobile: user.mobile,
-          address: user.address,
-          role: user.role,
-          password: '123123',
-          confirmPassword: '123123',
+          name: response.name,
+          username: response.username,
+          email: response.email,
+          mobile: response.mobile,
+          address: response.address,
+          role: response.userType,
         });
       } else {
-        console
-          .error
-          // `User with ID ${userId} not found or state is not initialized.`
-          ();
+        console.error`User with ID ${userId} not found or state is not initialized.`;
       }
     });
   }
 
   onSubmit() {
     if (this.userForm.invalid) {
-      return;
+      return alert('form is invalid');
     }
 
     const formValues = this.userForm.value;

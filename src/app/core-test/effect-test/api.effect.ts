@@ -19,6 +19,9 @@ import {
   loadUserDetailsSuccess,
   loadUserDetailsFailure,
   setSelectedUser,
+  deleteUser,
+  deleteUserSuccess,
+  deleteUserFailure,
 } from '../action-test/counter-action';
 import { TokanServiceService } from '../../tokan.service.service';
 import { of } from 'rxjs';
@@ -87,6 +90,18 @@ export class DataEffects {
           })
         );
       })
+    )
+  );
+
+  deleteUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteUser),
+      mergeMap((action) =>
+        this.tokanService.deleteUser(action.userId).pipe(
+          map(() => deleteUserSuccess({ userId: action.userId })),
+          catchError((error) => of(deleteUserFailure({ error })))
+        )
+      )
     )
   );
 }

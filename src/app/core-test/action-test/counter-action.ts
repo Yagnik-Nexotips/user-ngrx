@@ -30,6 +30,21 @@ export const addUserFailure = createAction(
   props<{ error: string }>()
 );
 
+// Action to trigger deleting a user
+export const deleteUser = createAction(
+  '[user] Delete user',
+  props<{ userId: string }>()
+);
+
+export const deleteUserSuccess = createAction(
+  '[user] Delete user Success',
+  props<{ userId: string }>()
+);
+export const deleteUserFailure = createAction(
+  '[user] Delete user Failure',
+  props<{ error: any }>()
+);
+
 // Action to trigger updating a user
 export const updateUser = createAction(
   '[User] Update User',

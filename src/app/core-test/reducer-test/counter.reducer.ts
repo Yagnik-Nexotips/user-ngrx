@@ -12,8 +12,12 @@ import {
   loadUserDetails,
   loadUserDetailsSuccess,
   loadUserDetailsFailure,
+  deleteUser,
+  deleteUserSuccess,
 } from '../action-test/counter-action';
 import { userData } from '../user-model/user.model';
+import { state } from '@angular/animations';
+import { elementAt } from 'rxjs';
 
 export interface DataState {
   data: userData[];
@@ -90,6 +94,11 @@ export const dataFeature = createFeature({
       loading: false,
       error,
       selectedUser: null, // In case of failure, reset selectedUser
+    })),
+    // Delete a single user
+    on(deleteUserSuccess, (state, { userId }) => ({
+      ...state,
+      data: state.data.filter((user) => user.id !== userId),
     }))
   ),
 });

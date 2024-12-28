@@ -144,3 +144,14 @@
     </button>
   </form>
 </div>
+
+<table>
+  <tr *ngFor="let user">
+    <td>{{ user.name }}</td>
+    <td>{{ user.email }}</td>
+    <td>
+      <!-- Add the click event to call loadData function with the user data -->
+      <button (click)="loadData(user)">Load User</button>
+    </td>
+  </tr>
+</table>
