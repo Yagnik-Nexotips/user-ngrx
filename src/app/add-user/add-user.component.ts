@@ -72,12 +72,12 @@ export class AddUserComponent implements OnInit {
       if (response.status === 'SUCCESS') {
         // Patch form only after user data is available
         this.userForm.patchValue({
-          name: response.name,
-          username: response.username,
-          email: response.email,
-          mobile: response.mobile,
-          address: response.address,
-          role: response.userType,
+          name: response.data.name,
+          username: response.data.username,
+          email: response.data.email,
+          mobile: response.data.mobile,
+          address: response.data.address,
+          role: response.data.userType,
         });
       } else {
         console.error`User with ID ${userId} not found or state is not initialized.`;

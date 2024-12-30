@@ -1,5 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { DataState } from '../reducer-test/counter.reducer';
+import { state } from '@angular/animations';
 // import { UserState } from '../state-test/User-state';
 
 export const selectDataState = createFeatureSelector<DataState>('user');
@@ -28,3 +29,12 @@ export const selectUserById = (userId: string) =>
   createSelector(selectUserState, (state: DataState) =>
     state?.data?.find((user) => user.id === userId)
   );
+export const DeleteUser = (userId: string) =>
+  createSelector(selectUserState, (state: DataState) =>
+    state?.data?.filter((user) => user.id !== userId)
+  );
+
+// export const DeleteUser = createSelector(
+//   selectDataState,
+//   (state: DataState) => state.data.filter((user) => user.id !== userId)
+// )

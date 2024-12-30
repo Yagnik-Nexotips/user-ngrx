@@ -98,8 +98,14 @@ export class DataEffects {
       ofType(deleteUser),
       mergeMap((action) =>
         this.tokanService.deleteUser(action.userId).pipe(
-          map(() => deleteUserSuccess({ userId: action.userId })),
-          catchError((error) => of(deleteUserFailure({ error })))
+          map(() => {
+            console.log('Delete successful for userId:', action.userId);
+            return deleteUserSuccess({ userId: action.userId });
+          }),
+          catchError((error) => {
+            console.error('Delete failed:', error);
+            return of(deleteUserFailure({ error }));
+          })
         )
       )
     )
