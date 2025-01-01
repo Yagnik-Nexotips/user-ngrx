@@ -17,6 +17,7 @@ import { Type, userData } from '../core-test/user-model/user.model';
 import { selectUserById } from '../core-test/selector-test/counter.selectors';
 import { CommonModule } from '@angular/common';
 import { DataState } from '../core-test/reducer-test/counter.reducer';
+import { Subject, take, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-add-user',
@@ -29,6 +30,7 @@ export class AddUserComponent implements OnInit {
   Type = Type;
   isEditMode: boolean = false;
   userId: string | null = null;
+  private destroy$ = new Subject<void>(); // Notifier
 
   userForm = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -59,30 +61,35 @@ export class AddUserComponent implements OnInit {
     });
   }
 
-  loadData(user: userData): void {
-    this.store.dispatch(loadUserDetailsSuccess({ user: user }));
-  }
-
   loadUserDetails(userId: string): void {
+    debugger;
     this.store.dispatch(loadUserDetails({ userId }));
 
     // Now listen for the user data in the store
-    this.store.select(selectUserById(userId)).subscribe((response: any) => {
-      console.log('Loaded User:', response);
-      if (response.status === 'SUCCESS') {
-        // Patch form only after user data is available
-        this.userForm.patchValue({
-          name: response.data.name,
-          username: response.data.username,
-          email: response.data.email,
-          mobile: response.data.mobile,
-          address: response.data.address,
-          role: response.data.userType,
-        });
-      } else {
-        console.error`User with ID ${userId} not found or state is not initialized.`;
-      }
-    });
+    this.store
+      .select(selectUserById(userId))
+      // .pipe(takeUntil(this.destroy$))
+      .subscribe((response: any) => {
+        console.log('Loaded User:', response);
+        if (response) {
+          // Patch form only after user data is available
+          this.userForm.patchValue({
+            name: response.data.name,
+            username: response.data.username,
+            email: response.data.email,
+            mobile: response.data.mobile,
+            address: response.data.address,
+            role: response.data.userType,
+          });
+        } else {
+          console.error`User with ID ${userId} not found or state is not initialized.`;
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(); // Notify all subscribers to complete
+    this.destroy$.complete(); // Complete the notifier
   }
 
   onSubmit() {

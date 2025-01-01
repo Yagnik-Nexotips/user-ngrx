@@ -84,10 +84,10 @@ export const dataFeature = createFeature({
       selectedUser: null, // Reset selectedUser while loading
     })),
     on(loadUserDetailsSuccess, (state, { user }) => ({
-      ...state,
+      ...(state = user),
       loading: false,
-      data: state.data.map((u) => (u.id === user.id ? user : u)), // Update user in the data array
-      selectedUser: user, // Set the selectedUser for edit mode
+      // Update user in the data array
+      // selectedUser: user, // Set the selectedUser for edit mode
     })),
     on(loadUserDetailsFailure, (state, { error }) => ({
       ...state,
