@@ -27,7 +27,7 @@ export const selectUserError = createSelector(
 debugger;
 export const selectUserById = (userId: string) =>
   createSelector(selectDataState, (state: DataState) =>
-    state.data.filter((data) => data.id === userId)
+    state.data.find((data) => data.id === userId)
   );
 // export const selectUserById = createSelector(
 //   selectDataState,

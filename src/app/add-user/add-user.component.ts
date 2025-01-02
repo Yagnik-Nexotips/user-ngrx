@@ -82,7 +82,7 @@ export class AddUserComponent implements OnInit {
             role: response.data.userType,
           });
         } else {
-          console.error`User with ID ${userId} not found or state is not initialized.`;
+          console.log`User with ID  not found or state is not initialized.`;
         }
       });
   }
