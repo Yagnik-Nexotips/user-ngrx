@@ -2,6 +2,14 @@
 <div *ngIf="error$ | async as error" class="error">{{ error }}</div>
 
 <div class="table-container">
+  <a
+    class="btn btn-primary"
+    routerLink="/form"
+    routerLinkActive="active"
+    ariaCurrentWhenActive="page"
+  >
+    add
+  </a>
   <table *ngIf="data$ | async as data" class="styled-table">
     <thead>
       <tr>
@@ -11,16 +19,31 @@
         <th>Mobile</th>
         <th>Address</th>
         <th>User Type</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of data">
-        <td>{{ item.name }}</td>
-        <td>{{ item.username }}</td>
-        <td>{{ item.email }}</td>
-        <td>{{ item.mobile }}</td>
-        <td>{{ item.address }}</td>
-        <td>{{ item.userType }}</td>
+      <tr *ngFor="let item of data$ | async">
+        <td data-label="Name">{{ item.name }}</td>
+        <td data-label="Username">{{ item.username }}</td>
+        <td data-label="Email">{{ item.email }}</td>
+        <td data-label="Mobile">{{ item.mobile }}</td>
+        <td data-label="Address">{{ item.address }}</td>
+        <td data-label="User Type">{{ item.role }}</td>
+        <td data-label="Action">
+          <span
+            class="btn btn-primary text-decoration-none text-white"
+            [routerLink]="['/form', item.id]"
+          >
+            Edit
+          </span>
+          <span
+            class="btn btn-primary text-decoration-none text-white"
+            (click)="deleteUser(item.id)"
+          >
+            Delete
+          </span>
+        </td>
       </tr>
     </tbody>
   </table>

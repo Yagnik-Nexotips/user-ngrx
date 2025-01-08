@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { loadData } from '../core-test/action-test/counter-action';
+import {
+  deleteUser,
+  deleteUserSuccess,
+  loadData,
+} from '../core-test/action-test/counter-action';
 import { Store } from '@ngrx/store';
 import {
   selectData,
@@ -8,12 +12,12 @@ import {
 } from '../core-test/reducer-test/counter.reducer';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-test',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './test.component.html',
   styleUrl: './test.component.scss',
 })
@@ -33,10 +37,16 @@ export class TestComponent implements OnInit {
       loadData({
         payload: {
           query: { isDeleted: false },
-          options: { select: null, page: 1, paginate: 10 },
+          options: { select: null, page: 1, paginate: 100 },
           isCountOnly: false,
         },
       })
     );
+  }
+
+  deleteUser(userId: string): void {
+    if (confirm('Are you sure you want to delete this user?')) {
+      this.store.dispatch(deleteUserSuccess({ userId }));
+    }
   }
 }
