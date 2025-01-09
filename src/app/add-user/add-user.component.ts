@@ -15,7 +15,11 @@ import {
 import { Type, userData } from '../core-test/user-model/user.model';
 import { selectUserById } from '../core-test/selector-test/counter.selectors';
 import { CommonModule } from '@angular/common';
-import { DataState } from '../core-test/reducer-test/counter.reducer';
+import {
+  DataState,
+  selectSelectedUser,
+} from '../core-test/reducer-test/counter.reducer';
+import { state } from '@angular/animations';
 
 @Component({
   selector: 'app-add-user',
@@ -36,8 +40,8 @@ export class AddUserComponent implements OnInit {
     mobile: new FormControl('', Validators.required),
     address: new FormControl('', Validators.required),
     role: new FormControl('', Validators.required),
-    password: new FormControl('123123', Validators.required),
-    confirmPassword: new FormControl('123123', Validators.required),
+    password: new FormControl('', Validators.required),
+    confirmPassword: new FormControl('', Validators.required),
   });
 
   constructor(
@@ -59,13 +63,11 @@ export class AddUserComponent implements OnInit {
   }
 
   loadUserDetails(userId: string): void {
-    this.store.dispatch(loadUserDetails({ userId }));
+    this.store.dispatch(loadUserDetails({ userId })); // Dispatch action to load user details
 
-    // Now listen for the user data in the store
-    this.store.select(selectUserById(userId)).subscribe((user) => {
-      console.log('Loaded User:', user);
+    this.store.select(selectSelectedUser).subscribe((user) => {
       if (user) {
-        // Patch form only after user data is available
+        console.log('Loaded User:', user);
         this.userForm.patchValue({
           name: user.name,
           username: user.username,
@@ -73,13 +75,9 @@ export class AddUserComponent implements OnInit {
           mobile: user.mobile,
           address: user.address,
           role: user.role,
-          password: '123123',
-          confirmPassword: '123123',
+          password: '', // Hardcoded or pre-filled value
+          confirmPassword: '', // Hardcoded or pre-filled value
         });
-      } else {
-        console.error(
-          `User with ID ${userId} not found or state is not initialized.`
-        );
       }
     });
   }

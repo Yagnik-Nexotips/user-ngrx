@@ -12,7 +12,7 @@ import { response } from 'express';
 export class TokanServiceService {
   private apiUrl = 'http://dailyapi.nexotips.com/admin/user';
   private token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY3LCJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNzM0NjA1OTgzLCJleHAiOjE3MzUyMDU5ODN9.6DZjdaYwEeQMjAxQrZbesScdDH93ZPwSNjGIpvpwPFI';
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY3LCJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNzM2MzI4OTE4LCJleHAiOjE3MzY5Mjg5MTh9.i_y60B87s2ph3AVK_L7Okn7nLnkf3PsRBKbFdxoXLck';
 
   constructor(private http: HttpClient) {}
 

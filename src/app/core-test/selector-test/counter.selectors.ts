@@ -26,5 +26,5 @@ export const selectUserState = (state: { user: DataState }) => state.user;
 
 export const selectUserById = (userId: string) =>
   createSelector(selectUserState, (state: DataState) =>
-    state?.data?.find((user) => user.id === userId)
+    state.data.find((user) => user.id === userId)
   );
