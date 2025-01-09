@@ -95,29 +95,6 @@
     </div>
 
     <div class="form-group">
-      <label for="password">password:</label>
-      <input
-        type="text"
-        id="mobile"
-        name="mobile"
-        formControlName="mobile"
-        required
-        placeholder="Enter mobile number"
-      />
-      <div
-        *ngIf="
-          userForm.get('mobile')?.invalid && userForm.get('mobile')?.touched
-        "
-      >
-        <span
-          *ngIf="userForm.get('mobile')?.hasError('required')"
-          class="text-danger"
-          >Mobile is required.</span
-        >
-      </div>
-    </div>
-
-    <div class="form-group">
       <label for="address">Address:</label>
       <textarea
         id="address"

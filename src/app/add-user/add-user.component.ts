@@ -75,8 +75,8 @@ export class AddUserComponent implements OnInit {
           mobile: user.mobile,
           address: user.address,
           role: user.role,
-          password: '', // Hardcoded or pre-filled value
-          confirmPassword: '', // Hardcoded or pre-filled value
+          password: '123132', // Hardcoded or pre-filled value
+          confirmPassword: '123123', // Hardcoded or pre-filled value
         });
       }
     });
