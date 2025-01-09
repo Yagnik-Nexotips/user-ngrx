@@ -37,7 +37,7 @@ export const updateUser = createAction(
 );
 export const updateUserSuccess = createAction(
   '[User] Update User Success',
-  props<{ updatedUser: userData }>()
+  props<{ updatedUser: any }>()
 );
 export const updateUserFailure = createAction(
   '[User] Update User Failure',

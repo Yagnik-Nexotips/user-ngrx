@@ -75,8 +75,8 @@ export class AddUserComponent implements OnInit {
           mobile: user.mobile,
           address: user.address,
           role: user.role,
-          password: '123132', // Hardcoded or pre-filled value
-          confirmPassword: '123123', // Hardcoded or pre-filled value
+          password: '', // Hardcoded or pre-filled value
+          confirmPassword: '', // Hardcoded or pre-filled value
         });
       }
     });
@@ -94,8 +94,8 @@ export class AddUserComponent implements OnInit {
       email: formValues.email || '',
       mobile: formValues.mobile || '',
       address: formValues.address || '',
-      confirmPassword: '123123', // Hardcoded as placeholder
-      password: '123123', // Hardcoded as placeholder
+      confirmPassword: '', // Hardcoded as placeholder
+      password: '', // Hardcoded as placeholder
       role: formValues.role || '',
     };
 

@@ -10,9 +10,10 @@ import { response } from 'express';
   providedIn: 'root',
 })
 export class TokanServiceService {
+  userID: string = '';
   private apiUrl = 'http://dailyapi.nexotips.com/admin/user';
   private token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY3LCJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNzM2MzI4OTE4LCJleHAiOjE3MzY5Mjg5MTh9.i_y60B87s2ph3AVK_L7Okn7nLnkf3PsRBKbFdxoXLck';
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY3LCJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNzM2NDE0MzAxLCJleHAiOjE3MzcwMTQzMDF9.9WoJjTxF1KTB4au-D8Myp5aQfCa_8aAFtnh8DaaY_J0';
 
   constructor(private http: HttpClient) {}
 
@@ -35,6 +36,7 @@ export class TokanServiceService {
 
   // Add method to get user details
   getUserDetails(userId: string): Observable<userData> {
+    this.userID = userId;
     const headers = new HttpHeaders().set(
       'Authorization',
       `Bearer ${this.token}`
@@ -64,17 +66,17 @@ export class TokanServiceService {
     );
   }
 
-  updateUser(User: any): Observable<any[]> {
+  updateUser(User: userData): Observable<userData[]> {
     const headers = new HttpHeaders().set(
       'Authorization',
       `Bearer ${this.token}`
     );
 
     return this.http
-      .put<any>(`${this.apiUrl}/update/${User.id}`, User, { headers })
+      .put<any>(`${this.apiUrl}/update/${this.userID}`, User, { headers })
       .pipe(
         map((response) => {
-          return response?.data?.data;
+          return response.data as userData[];
         }),
         catchError((error) => {
           return of([]);

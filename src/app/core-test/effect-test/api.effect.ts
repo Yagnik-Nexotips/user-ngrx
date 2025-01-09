@@ -19,6 +19,8 @@ import {
   loadUserDetailsSuccess,
   loadUserDetailsFailure,
   setSelectedUser,
+  updateUserSuccess,
+  updateUserFailure,
 } from '../action-test/counter-action';
 import { TokanServiceService } from '../../tokan.service.service';
 import { of } from 'rxjs';
@@ -58,14 +60,15 @@ export class DataEffects {
 
   updateData$ = createEffect(() =>
     this.actions$.pipe(
-      ofType('[User] Update User'),
-      exhaustMap(() =>
-        this.tokanService.updateUser(updateUser).pipe(
-          map((data) => ({
-            type: '[User] Update User Success',
-            payload: data,
-          })),
-          catchError(() => of({ type: '[User] Update User Failure' }))
+      ofType(updateUser),
+      exhaustMap((action) =>
+        this.tokanService.updateUser(action.user).pipe(
+          map(
+            (updatedUser) => updateUserSuccess({ updatedUser }) // Pass the updated user object
+          ),
+          catchError((error) =>
+            of(updateUserFailure({ error: error.message || 'Update failed' }))
+          )
         )
       )
     )

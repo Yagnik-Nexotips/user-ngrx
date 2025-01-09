@@ -93,6 +93,52 @@
         >
       </div>
     </div>
+    <div class="form-group">
+      <label for="mobile">Password:</label>
+      <input
+        type="text"
+        id="password"
+        name="password"
+        formControlName="password"
+        required
+        placeholder="Enter mobile password"
+      />
+      <div
+        *ngIf="
+          userForm.get('password')?.invalid && userForm.get('password')?.touched
+        "
+      >
+        <span
+          *ngIf="userForm.get('password')?.hasError('required')"
+          class="text-danger"
+          >Password is required.</span
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="mobile">Conform password:</label>
+      <input
+        type="text"
+        id="confirmPassword"
+        name="confirmPassword"
+        formControlName="confirmPassword"
+        required
+        placeholder="Enter mobile Confirm Password"
+      />
+      <div
+        *ngIf="
+          userForm.get('confirmPassword')?.invalid &&
+          userForm.get('confirmPassword')?.touched
+        "
+      >
+        <span
+          *ngIf="userForm.get('confirmPassword')?.hasError('required')"
+          class="text-danger"
+          >Confirm Password is required.</span
+        >
+      </div>
+    </div>
 
     <div class="form-group">
       <label for="address">Address:</label>
@@ -137,7 +183,7 @@
     <button
       type="submit"
       class="btn-submit"
-      [disabled]="userForm.invalid || (isEditMode && !userId)"
+      [disabled]="userForm.invalid"
       (click)="onSubmit()"
     >
       {{ isEditMode ? "Update User" : "Add User" }}
