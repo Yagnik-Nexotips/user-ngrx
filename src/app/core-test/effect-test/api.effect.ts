@@ -21,6 +21,9 @@ import {
   setSelectedUser,
   updateUserSuccess,
   updateUserFailure,
+  deleteUserSuccess,
+  deleteUserFailure,
+  deleteUser,
 } from '../action-test/counter-action';
 import { TokanServiceService } from '../../tokan.service.service';
 import { of } from 'rxjs';
@@ -81,6 +84,18 @@ export class DataEffects {
         this.tokanService.getUserDetails(action.userId).pipe(
           map((user) => loadUserDetailsSuccess({ user })),
           catchError((error) => of(loadUserDetailsFailure({ error })))
+        )
+      )
+    )
+  );
+
+  deleteUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteUser),
+      switchMap(({ id }) =>
+        this.tokanService.deleteUser(id).pipe(
+          map(() => deleteUserSuccess({ id })),
+          catchError((error) => of(deleteUserFailure({ error: error.message })))
         )
       )
     )

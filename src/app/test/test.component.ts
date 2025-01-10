@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { loadData } from '../core-test/action-test/counter-action';
+import { deleteUser, loadData } from '../core-test/action-test/counter-action';
 import { Store } from '@ngrx/store';
 import {
   selectData,
@@ -43,5 +43,8 @@ export class TestComponent implements OnInit {
 
   DeleteUser(id: number) {
     console.log('delete by id', id);
+    if (confirm('Are you sure you want to delete this user?')) {
+      this.store.dispatch(deleteUser({ id }));
+    }
   }
 }

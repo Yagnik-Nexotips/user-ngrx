@@ -83,4 +83,19 @@ export class TokanServiceService {
         })
       );
   }
+
+  deleteUser(id: number): Observable<void> {
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${this.token}`
+    );
+    return this.http
+      .delete<void>(`${this.apiUrl}/delete/${id}`, { headers })
+      .pipe(
+        catchError((error) => {
+          console.error('Error deleting user:', error);
+          throw error;
+        })
+      );
+  }
 }

@@ -12,6 +12,9 @@ import {
   loadUserDetails,
   loadUserDetailsSuccess,
   loadUserDetailsFailure,
+  deleteUser,
+  deleteUserSuccess,
+  deleteUserFailure,
 } from '../action-test/counter-action';
 import { userData } from '../user-model/user.model';
 
@@ -90,6 +93,22 @@ export const dataFeature = createFeature({
       loading: false,
       error,
       selectedUser: null, // In case of failure, reset selectedUser
+    })),
+    //delete data
+    on(deleteUser, (state) => ({
+      ...state,
+      loading: true,
+      error: null,
+    })),
+    on(deleteUserSuccess, (state, { id }) => ({
+      ...state,
+      loading: false,
+      users: state.data.filter((user) => Number(user.id) !== id),
+    })),
+    on(deleteUserFailure, (state, { error }) => ({
+      ...state,
+      loading: false,
+      error,
     }))
   ),
 });

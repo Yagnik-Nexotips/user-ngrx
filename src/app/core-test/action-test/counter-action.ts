@@ -1,4 +1,9 @@
-import { createAction, createActionGroup, emptyProps, props } from '@ngrx/store';
+import {
+  createAction,
+  createActionGroup,
+  emptyProps,
+  props,
+} from '@ngrx/store';
 import { userData } from '../user-model/user.model';
 
 // Action to trigger loading a user
@@ -65,10 +70,18 @@ export const setSelectedUser = createAction(
   props<{ user: userData }>() // This will pass the userData as the payload
 );
 
-export const deleteUserById = createActionGroup({
-  source: 'userdata',
-  events: {
-    'deleteUser':emptyProps(),
-    'deleteUserSuccess':
-  }
-})
+//delete action
+export const deleteUser = createAction(
+  '[User] Delete User',
+  props<{ id: number }>()
+);
+
+export const deleteUserSuccess = createAction(
+  '[User] Delete User Success',
+  props<{ id: number }>()
+);
+
+export const deleteUserFailure = createAction(
+  '[User] Delete User Failure',
+  props<{ error: string }>()
+);
