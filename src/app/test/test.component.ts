@@ -40,4 +40,8 @@ export class TestComponent implements OnInit {
       })
     );
   }
+
+  DeleteUser(id: number) {
+    console.log('delete by id', id);
+  }
 }
